@@ -13,6 +13,7 @@ function Player(world)
         tag = "player",
         body = love.physics.newBody(world, 100, 200, "dynamic"),
         shape = love.physics.newRectangleShape(_width/2, _height/2, _width, _height),
+        coins = 0,
 
         move = function(self) 
 
@@ -49,7 +50,11 @@ function Player(world)
                     player.canJump = not player.canJump
                 end
             end
-        end
+        end,
+
+        incrementCoins = function(self)
+            self.coins = self.coins + 1
+        end,
     }
 
     player.body:setFixedRotation(true)
