@@ -17,6 +17,8 @@ function Coin.new(x, y, world)
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
     instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
     instance.physics.fixture:setSensor(true)
+
+    instance.sound = love.audio.newSource("sounds/coin_collect.wav", "static")
     table.insert(ActiveCoins, instance)
 end
 
@@ -24,6 +26,7 @@ function Coin:remove()
     for i, instance in ipairs(ActiveCoins) do
         if instance == self then
             player:incrementCoins()
+            self.sound:play()
             self.physics.body:destroy()
             table.remove(ActiveCoins, i)
         end
