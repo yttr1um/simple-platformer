@@ -26,12 +26,8 @@ function love.load()
 
 
 
-    -- walls (border)
-
-    newWall(0, 0, SCREEN_WIDTH, 20) --top
-    newWall(0, 0, 20, SCREEN_HEIGHT) -- left
-    newWall(SCREEN_WIDTH-20, 0, 20, SCREEN_HEIGHT) --right
-    newWall(0, SCREEN_HEIGHT-20, SCREEN_WIDTH, 20) --bottom
+    -- walls 
+    newWall(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50) --bottom
 end
 
 function love.update(dt)
@@ -41,7 +37,8 @@ end
 function love.draw()    
     for i = 1, #walls do
         local w = walls[i]
-        love.graphics.rectangle("line", w.x, w.y, w.w, w.h)
+        love.graphics.setColor(0, 1, 0)
+        love.graphics.rectangle("fill", w.x, w.y, w.w, w.h)
     end
 
     love.graphics.setBackgroundColor(0.6, 0.8, 1)
