@@ -10,6 +10,7 @@ function Coin.new(x, y, world)
     instance.width = instance.img:getWidth()
     instance.height = instance.img:getHeight()
     instance.scaleX = 1
+    instance.toBeRemoved = false
 
     instance.physics = {}
     instance.physics.body = love.physics.newBody(world, instance.x, instance.y, "static")
@@ -19,8 +20,24 @@ function Coin.new(x, y, world)
     table.insert(ActiveCoins, instance)
 end
 
+function Coin:remove()
+    for i, instance in ipairs(ActiveCoins) do
+        if instance == self then
+            self.physics.body:destroy()
+            table.remove(ActiveCoins, i)
+        end
+    end
+end
+
 function Coin:update(dt)
     self:spin(dt)
+    self:checkRemove()
+end
+
+function Coin:checkRemove()
+    if self.toBeRemoved then
+        self:remove()
+    end
 end
 
 function Coin:spin(dt)
@@ -41,5 +58,16 @@ end
 function Coin.drawAll()
     for i, instance in ipairs(ActiveCoins) do
         instance:draw()
+    end
+end
+
+function Coin.beginContact(a, b, contact)
+    for i, instance in ipairs(ActiveCoins) do
+        if a == instance.physics.fixture or b == instance.physics.fixture then
+            if a == player.fixture or b == player.fixture then
+                instance.toBeRemoved = true
+                return true
+            end
+        end
     end
 end

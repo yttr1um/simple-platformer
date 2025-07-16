@@ -4,7 +4,10 @@ require("coin")
 local PIXEL_PER_METER = 50
 world = love.physics.newWorld(0, 9.81 * PIXEL_PER_METER)
 
-function beginContaact(a, b, contact)
+function beginContact(a, b, contact)
+
+    if Coin.beginContact(a, b, contact) then return end
+
     local obj1, obj2 = a:getUserData(), b:getUserData()
     player.contactPlatform(obj1, obj2)
 end
@@ -14,7 +17,7 @@ function endContact(a, b, contact)
     player.contactPlatform(obj1, obj2)
 end
 
-world:setCallbacks(beginContaact, endContact)
+world:setCallbacks(beginContact, endContact)
 
 
 function newPlatform(x, y, w, h) 
