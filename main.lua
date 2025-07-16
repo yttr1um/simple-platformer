@@ -1,4 +1,5 @@
 Player = require "Player"
+require("coin")
 
 local PIXEL_PER_METER = 50
 world = love.physics.newWorld(0, 9.81 * PIXEL_PER_METER)
@@ -47,6 +48,11 @@ function love.load()
     newPlatform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50) 
     newPlatform(200, SCREEN_HEIGHT-100, 200, 50)
     newPlatform(450, 545, 400, 30)
+
+    --coins
+    coin1 = Coin.new(500, 520)
+    coin2 = Coin.new(600, 520)
+    coin3 = Coin.new(700, 520)
 end
 
 function love.update(dt)
@@ -61,6 +67,10 @@ function love.draw()
         love.graphics.setColor(0.2, 0.6, 1)
         love.graphics.rectangle("fill", p.x, p.y, p.w, p.h)
     end
+
+    coin1:draw()
+    coin2:draw()
+    coin3:draw()
 
     player:draw()
 
