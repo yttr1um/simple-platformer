@@ -3,24 +3,34 @@ Player = require "Player"
 local PIXEL_PER_METER = 50
 world = love.physics.newWorld(0, 9.81 * PIXEL_PER_METER)
 
-player = Player(world)
+function beginContaact(a, b, contact)
+    local obj1, obj2 = a:getUserData(), b:getUserData()
+    player.contactPlatform(obj1, obj2)
+end
 
-walls = {}
+function endContact(a, b, contact)
+    local obj1, obj2 = a:getUserData(), b:getUserData()
+    player.contactPlatform(obj1, obj2)
+end
 
-function newWall(x, y, w, h) 
-    local wall = {
+world:setCallbacks(beginContaact, endContact)
+
+
+function newPlatform(x, y, w, h) 
+    local platform = {
         x = x,
         y = y,
         w = w,
         h = h,
-        tag = "wall",
+        tag = "platform",
 
         body = love.physics.newBody(world, x, y, "static"),
         shape = love.physics.newRectangleShape(w/2, h/2, w, h),
     }
 
-    wall.fixture = love.physics.newFixture(wall.body, wall.shape)
-    table.insert(walls, wall)
+    platform.fixture = love.physics.newFixture(platform.body, platform.shape)
+    platform.fixture:setUserData(platform)
+    table.insert(platforms, platform)
 end
 
 function love.load()
@@ -29,24 +39,26 @@ function love.load()
 
     love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT,  {fullscreen=false, vsync=true})
 
+    player = Player(world)
 
+    platforms = {}
 
-    -- walls 
-    newWall(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50) --bottom
+    -- platforms
+    newPlatform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50) 
+    newPlatform(200, SCREEN_HEIGHT-100, 200, 50)
 end
 
 function love.update(dt)
     world:update(dt)
 
     player:move()
-    
 end
 
 function love.draw()    
-    for i = 1, #walls do
-        local w = walls[i]
-        love.graphics.setColor(0, 1, 0)
-        love.graphics.rectangle("fill", w.x, w.y, w.w, w.h)
+    for i = 1, #platforms do
+        local p = platforms[i]
+        love.graphics.setColor(0.2, 0.6, 1)
+        love.graphics.rectangle("fill", p.x, p.y, p.w, p.h)
     end
 
     player:draw()
