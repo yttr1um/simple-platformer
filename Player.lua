@@ -16,7 +16,8 @@ function Player(world)
 
         move = function(self) 
 
-            local dx, dy = 0, 0
+            local dx, dy = player.body:getLinearVelocity()
+            dx = 0
 
             if love.keyboard.isDown("d") then
                 dx = self.speed

@@ -1,6 +1,7 @@
 Player = require "Player"
 
-world = love.physics.newWorld(0, 0)
+local PIXEL_PER_METER = 50
+world = love.physics.newWorld(0, 9.81 * PIXEL_PER_METER)
 
 player = Player(world)
 
