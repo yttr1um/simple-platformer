@@ -43,4 +43,6 @@ function love.draw()
         local w = walls[i]
         love.graphics.rectangle("line", w.x, w.y, w.w, w.h)
     end
+
+    love.graphics.setBackgroundColor(0.6, 0.8, 1)
 end
