@@ -1,6 +1,8 @@
-player = require "Player"
+Player = require "Player"
 
 world = love.physics.newWorld(0, 0)
+
+player = Player(world)
 
 walls = {}
 
@@ -33,6 +35,9 @@ function love.load()
 end
 
 function love.update(dt)
+    world:update(dt)
+
+    player:move()
     
 end
 
@@ -42,6 +47,8 @@ function love.draw()
         love.graphics.setColor(0, 1, 0)
         love.graphics.rectangle("fill", w.x, w.y, w.w, w.h)
     end
+
+    player:draw()
 
     love.graphics.setBackgroundColor(0.6, 0.8, 1)
 end
