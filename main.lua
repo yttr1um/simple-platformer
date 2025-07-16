@@ -50,14 +50,14 @@ function love.load()
     newPlatform(450, 545, 400, 30)
 
     --coins
-    coin1 = Coin.new(500, 520)
-    coin2 = Coin.new(600, 520)
-    coin3 = Coin.new(700, 520)
+    Coin.new(550, 520, world)
+    Coin.new(650, 520, world)
+    Coin.new(750, 520, world)
 end
 
 function love.update(dt)
     world:update(dt)
-
+    Coin.updateAll(dt)
     player:move()
 end
 
@@ -68,11 +68,10 @@ function love.draw()
         love.graphics.rectangle("fill", p.x, p.y, p.w, p.h)
     end
 
-    coin1:draw()
-    coin2:draw()
-    coin3:draw()
-
+    Coin.drawAll()
     player:draw()
 
     love.graphics.setBackgroundColor(0.6, 0.8, 1)
+
+    love.graphics.setColor(1, 1, 1)
 end
