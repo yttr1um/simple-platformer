@@ -15,6 +15,7 @@ function Coin.new(x, y, world)
     instance.physics.body = love.physics.newBody(world, instance.x, instance.y, "static")
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
     instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
+    instance.physics.fixture:setSensor(true)
     table.insert(ActiveCoins, instance)
 end
 
