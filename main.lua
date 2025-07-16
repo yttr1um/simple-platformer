@@ -46,6 +46,7 @@ function love.load()
     -- platforms
     newPlatform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50) 
     newPlatform(200, SCREEN_HEIGHT-100, 200, 50)
+    newPlatform(450, 545, 400, 30)
 end
 
 function love.update(dt)
