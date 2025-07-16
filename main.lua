@@ -1,3 +1,7 @@
+player = require "Player"
+
+world = love.physics.newWorld(0, 0)
+
 walls = {}
 
 function newWall(x, y, w, h) 
@@ -21,8 +25,6 @@ function love.load()
     SCREEN_HEIGHT = 720
 
     love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT,  {fullscreen=false, vsync=true})
-
-    world = love.physics.newWorld(0, 0)
 
 
 
