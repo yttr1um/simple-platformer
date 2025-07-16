@@ -64,6 +64,12 @@ function love.update(dt)
     player:move()
 end
 
+function love.keypressed(key, scancode, isrepeat)
+    if key == "r" then
+        love.event.quit("restart")
+    end
+end
+
 function love.draw()    
     for i = 1, #platforms do
         local p = platforms[i]
