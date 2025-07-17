@@ -24,6 +24,7 @@ function Player:load()
     self.direction = "right"
 
     self.coins = 0
+    self.health = {current = 3, max = 3}
 
     self:loadAssets()
 
@@ -32,7 +33,6 @@ function Player:load()
     self.physics.body:setFixedRotation(true)
     self.physics.shape = love.physics.newRectangleShape(self.width, self.height)
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
-
 end
 
 function Player:loadAssets()
@@ -47,6 +47,20 @@ function Player:loadAssets()
     self.animation.draw = self.animation.idle
     self.animation.width = 32
     self.animation.height = 32
+end
+
+function Player:takeDamage(amount)
+    if self.health.current - amount > 0 then
+        self.health.current = self.health.current - amount
+    else
+        self.health.current = 0
+        self:die()
+    end
+    print("Player Health: "..self.health.current)
+end
+
+function Player:die()
+    print("Player died")
 end
 
 function Player:incrementCoins()
