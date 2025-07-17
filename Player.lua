@@ -21,12 +21,18 @@ function Player:load()
 
     self.coins = 0
 
+    self:loadAssets()
+
     self.physics = {}
     self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
     self.physics.body:setFixedRotation(true)
     self.physics.shape = love.physics.newRectangleShape(self.width, self.height)
     self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 
+end
+
+function Player:loadAssets()
+    self.animation = {timer = 0, rate = 0.1}
 end
 
 function Player:incrementCoins()
