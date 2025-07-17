@@ -33,10 +33,9 @@ function love.load()
     World = love.physics.newWorld(0, 0)
     World:setCallbacks(beginContact, endContact)
 
-    SCREEN_WIDTH = 1280
-    SCREEN_HEIGHT = 720
+    SCREEN_WIDTH = love.graphics.getWidth()
+    SCREEN_HEIGHT = love.graphics.getHeight()
 
-    love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT,  {fullscreen=false, vsync=true})
     Player:load()
 
     platforms = {}
