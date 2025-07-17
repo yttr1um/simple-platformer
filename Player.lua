@@ -11,6 +11,7 @@ function Player:load()
     self.acceleration = 4000
     self.friction = 3500
     self.gravity = 1500
+    self.jumpAmount = -500
 
     self.grounded = false
 
@@ -82,7 +83,7 @@ function Player:beginContact(a, b, collision)
     local nx, ny = collision:getNormal()
     if a == self.physics.fixture then
         if ny > 0 then
-            self:land()
+            self:land(collision)
         end
     elseif b == self.physics.fixture then
         if ny < 0 then
@@ -91,13 +92,25 @@ function Player:beginContact(a, b, collision)
     end
 end
 
-function Player:land()
+function Player:land(collision)
+    self.currentGroundCollision = collision
     self.yVel = 0
     self.grounded = true
 end
 
-function Player:endContact(a, b, collision)
+function Player:jump(key)
+    if (key == "w" or key == "up") and self.grounded then
+        self.yVel = self.jumpAmount
+        self.grounded = false
+    end
+end
 
+function Player:endContact(a, b, collision)
+    if a == self.physics.fixture or b == self.physics.fixture then
+        if self.currentGroundCollision == collision then
+            self.grounded = false
+        end
+    end
 end
 
 function Player:draw()

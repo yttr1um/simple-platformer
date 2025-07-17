@@ -62,7 +62,9 @@ function love.keypressed(key, scancode, isrepeat)
     if key == "r" then
         love.event.quit("restart")
     end
-end
+
+    Player:jump(key)
+end 
 
 function love.draw()    
     for i = 1, #platforms do
