@@ -1,3 +1,5 @@
+anim8 = require("libraries/anim8")
+
 Player = {}
 
 function Player:load()
@@ -18,6 +20,8 @@ function Player:load()
 
     self.grounded = false
     self.hasDoubleJump = true
+    
+    self.direction = "right"
 
     self.coins = 0
 
@@ -32,7 +36,17 @@ function Player:load()
 end
 
 function Player:loadAssets()
-    self.animation = {timer = 0, rate = 0.1}
+    self.animation = {}
+    self.animation.rate = 0.25
+    self.animation.spriteSheet = love.graphics.newImage("assets/knight.png")
+    self.grid = anim8.newGrid(32, 32, self.animation.spriteSheet:getWidth(), self.animation.spriteSheet:getHeight())
+
+    self.animation.idle = anim8.newAnimation(self.grid('1-4', 1), self.animation.rate)
+    self.animation.run = anim8.newAnimation(self.grid('1-8', '3-4'), self.animation.rate)
+
+    self.animation.draw = self.animation.idle
+    self.animation.width = 32
+    self.animation.height = 32
 end
 
 function Player:incrementCoins()
@@ -40,10 +54,20 @@ function Player:incrementCoins()
 end
 
 function Player:update(dt)
+    self:setDirection()
     self:syncPhysics()
     self:move(dt)
     self:applyGravity(dt)
     self:decreaseGraceTime(dt)
+    self.animation.draw:update(dt)
+end
+
+function Player:setDirection()
+    if self.xVel < 0 then
+        self.direction = "left"
+    elseif self.xVel > 0 then
+        self.direction = "right"
+    end
 end
 
 function Player:decreaseGraceTime(dt)
@@ -57,7 +81,10 @@ function Player:applyGravity(dt)
 end
 
 function Player:move(dt)
+    self.animation.draw = self.animation.idle
     if love.keyboard.isDown("d", "right") then
+        self.animation.rate = 0.1
+        self.animation.draw = self.animation.run
         if self.xVel < self.maxSpeed then
             if self.xVel + self.acceleration * dt < self.maxSpeed then
                 self.xVel = self.xVel + self.acceleration * dt
@@ -66,6 +93,8 @@ function Player:move(dt)
             end
         end
     elseif love.keyboard.isDown("a", "left") then
+        self.animation.rate = 0.1
+        self.animation.draw = self.animation.run
         if self.xVel > -self.maxSpeed then
             if self.xVel - self.acceleration * dt < self.maxSpeed then
                 self.xVel = self.xVel - self.acceleration * dt
@@ -143,5 +172,6 @@ function Player:endContact(a, b, collision)
 end
 
 function Player:draw()
-    love.graphics.rectangle("fill", self.x - self.width/2, self.y-self.height/2, self.width, self.height)
+    local scaleX = self.direction == "left" and -1 or 1
+    self.animation.draw:draw(self.animation.spriteSheet, self.x, self.y, nil, scaleX, 1, self.animation.width/2, self.animation.height/2)
 end
