@@ -1,4 +1,5 @@
-require "Player"
+local STI = require("sti")
+require("Player")
 require("coin")
 
 function beginContact(a, b, collision)
@@ -11,27 +12,28 @@ function endContact(a, b, collision)
 end
 
 
-function newPlatform(x, y, w, h) 
-    local platform = {
-        x = x,
-        y = y,
-        w = w,
-        h = h,
-        tag = "platform",
+-- function newPlatform(x, y, w, h) 
+--     local platform = {
+--         x = x,
+--         y = y,
+--         w = w,
+--         h = h,
+--         tag = "platform",
 
-        body = love.physics.newBody(World, x, y, "static"),
-        shape = love.physics.newRectangleShape(w/2, h/2, w, h),
-    }
+--         body = love.physics.newBody(World, x, y, "static"),
+--         shape = love.physics.newRectangleShape(w/2, h/2, w, h),
+--     }
 
-    platform.fixture = love.physics.newFixture(platform.body, platform.shape)
-    platform.fixture:setUserData(platform)
-    table.insert(platforms, platform)
-end
+--     platform.fixture = love.physics.newFixture(platform.body, platform.shape)
+--     platform.fixture:setUserData(platform)
+--     table.insert(platforms, platform)
+-- end
 
 function love.load()
 
     World = love.physics.newWorld(0, 0)
     World:setCallbacks(beginContact, endContact)
+    Map = STI("map/1.lua")
 
     SCREEN_WIDTH = love.graphics.getWidth()
     SCREEN_HEIGHT = love.graphics.getHeight()
@@ -41,9 +43,9 @@ function love.load()
     platforms = {}
 
     -- platforms
-    newPlatform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50) 
-    newPlatform(200, SCREEN_HEIGHT-100, 200, 50)
-    newPlatform(450, 545, 400, 30)
+    -- newPlatform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50) 
+    -- newPlatform(200, SCREEN_HEIGHT-100, 200, 50)
+    -- newPlatform(450, 545, 400, 30)
 
     --coins
     Coin.new(550, 520, world)
@@ -66,12 +68,13 @@ function love.keypressed(key, scancode, isrepeat)
 end 
 
 function love.draw()    
-    for i = 1, #platforms do
-        local p = platforms[i]
-        love.graphics.setColor(0.2, 0.6, 1)
-        love.graphics.rectangle("fill", p.x, p.y, p.w, p.h)
-    end
+    -- for i = 1, #platforms do
+    --     local p = platforms[i]
+    --     love.graphics.setColor(0.2, 0.6, 1)
+    --     love.graphics.rectangle("fill", p.x, p.y, p.w, p.h)
+    -- end
 
+    Map:draw(0, 0, 2)
     Player:draw()
     Coin.drawAll()
 
