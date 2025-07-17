@@ -3,8 +3,8 @@ Player = {}
 function Player:load()
     self.x = 100
     self.y = 0
-    self.width = 50
-    self.height = 50
+    self.width = 20
+    self.height = 20
     self.xVel = 0
     self.yVel = 0
     self.maxSpeed = 200
