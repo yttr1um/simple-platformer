@@ -1,6 +1,7 @@
-local STI = require("sti")
+local STI = require("libraries/sti")
 require("Player")
 require("coin")
+require("libraries/anim8")
 
 function beginContact(a, b, collision)
     Player:beginContact(a, b, collision)
