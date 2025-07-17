@@ -14,6 +14,7 @@ function Player:load()
     self.jumpAmount = -500
 
     self.grounded = false
+    self.hasDoubleJump = true
 
     self.coins = 0
 
@@ -93,7 +94,7 @@ function Player:beginContact(a, b, collision)
         end
     elseif b == self.physics.fixture then
         if ny < 0 then
-            self:land()
+            self:land(collision)
         end
     end
 end
@@ -102,12 +103,17 @@ function Player:land(collision)
     self.currentGroundCollision = collision
     self.yVel = 0
     self.grounded = true
+    self.hasDoubleJump = true
 end
 
 function Player:jump(key)
-    if (key == "w" or key == "up") and self.grounded then
-        self.yVel = self.jumpAmount
-        self.grounded = false
+    if key == "w" or key == "up" then
+        if self.grounded then
+            self.yVel = self.jumpAmount
+        elseif self.hasDoubleJump then
+            self.hasDoubleJump = false
+            self.yVel = self.jumpAmount * 0.8
+        end
     end
 end
 
