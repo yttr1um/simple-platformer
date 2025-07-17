@@ -2,7 +2,7 @@ Coin = {}
 Coin.__index = Coin
 ActiveCoins = {}
 
-function Coin.new(x, y, world)
+function Coin.new(x, y)
     local instance = setmetatable({}, Coin)
     instance.x = x
     instance.y = y
@@ -13,7 +13,7 @@ function Coin.new(x, y, world)
     instance.toBeRemoved = false
 
     instance.physics = {}
-    instance.physics.body = love.physics.newBody(world, instance.x, instance.y, "static")
+    instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "static")
     instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
     instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
     instance.physics.fixture:setSensor(true)
