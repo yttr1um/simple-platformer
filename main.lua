@@ -1,8 +1,8 @@
-Player = require "Player"
+require "Player"
 require("coin")
 
 local PIXEL_PER_METER = 50
-world = love.physics.newWorld(0, 9.81 * PIXEL_PER_METER)
+World = love.physics.newWorld(0, 9.81 * PIXEL_PER_METER)
 
 function beginContact(a, b, contact)
 
@@ -44,6 +44,7 @@ function love.load()
     love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT,  {fullscreen=false, vsync=true})
 
     player = Player(world)
+    Player:load()
 
     platforms = {}
 
@@ -60,6 +61,7 @@ end
 
 function love.update(dt)
     world:update(dt)
+    Player:update(dt)
     Coin.updateAll(dt)
     player:move()
 end
@@ -77,8 +79,8 @@ function love.draw()
         love.graphics.rectangle("fill", p.x, p.y, p.w, p.h)
     end
 
+    Player:draw()
     Coin.drawAll()
-    player:draw()
 
     love.graphics.setBackgroundColor(0.6, 0.8, 1)
 

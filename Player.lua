@@ -1,14 +1,29 @@
 Player = {}
 
-function Player.load()
+function Player:load()
+    self.x = 100
+    self.y = 0
+    self.width = 50
+    self.height = 50
+    self.xVel = 0
+    self.yVel = 0
+    self.maxSpeed = 200
+    self.acceleration = 4000
+    self.friction = 3500
+
+    self.physics = {}
+    self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamix")
+    self.physics.body:setFixedRotation(true)
+    self.physics.shape = love.physics.newRectangleShape(self.width/2, self.height/2, self.width, self.height)
+    self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
 
 end
 
-function Player.update(dt)
+function Player:update(dt)
 
 end
 
-function Player.draw()
+function Player:draw()
 
 end
 
