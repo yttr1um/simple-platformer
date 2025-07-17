@@ -1,15 +1,13 @@
 require "Player"
 require("coin")
 
-function beginContact(a, b, contact)
-
-    if Coin.beginContact(a, b, contact) then return end
-
-    local obj1, obj2 = a:getUserData(), b:getUserData()
+function beginContact(a, b, collision)
+    Player:beginContact(a, b, collision)
+    if Coin.beginContact(a, b, collision) then return end
 end
 
-function endContact(a, b, contact)
-    local obj1, obj2 = a:getUserData(), b:getUserData()
+function endContact(a, b, collision)
+    Player:endContact(a, b, collision)
 end
 
 
