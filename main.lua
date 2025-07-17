@@ -1,7 +1,7 @@
 local STI = require("libraries/sti")
 require("Player")
 require("coin")
-require("libraries/anim8")
+require("gui")
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 
@@ -27,6 +27,7 @@ function love.load()
     SCREEN_HEIGHT = love.graphics.getHeight()
 
     Player:load()
+    GUI:load()
 
     platforms = {}
 
@@ -40,6 +41,7 @@ function love.update(dt)
     World:update(dt)
     Player:update(dt)
     Coin.updateAll(dt)
+    GUI:update(dt)
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -62,6 +64,7 @@ function love.draw()
     Coin.drawAll()
 
     love.graphics.pop()
+    GUI:draw()
 
     love.graphics.setColor(1, 1, 1)
 end
