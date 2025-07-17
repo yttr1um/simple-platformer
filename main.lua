@@ -15,7 +15,10 @@ function love.load()
 
     World = love.physics.newWorld(0, 0)
     World:setCallbacks(beginContact, endContact)
-    Map = STI("map/1.lua")
+
+    Map = STI("map/1.lua", {"box2d"})
+    Map: box2d_init(World)
+    Map.layers.solid.visible = false
 
     SCREEN_WIDTH = love.graphics.getWidth()
     SCREEN_HEIGHT = love.graphics.getHeight()
@@ -44,12 +47,18 @@ function love.keypressed(key, scancode, isrepeat)
     Player:jump(key)
 end 
 
-function love.draw()    
+function love.draw()   
+    
+    love.graphics.setBackgroundColor(0.6, 0.8, 1)
+
     Map:draw(0, 0, 2)
+    love.graphics.push()
+    love.graphics.scale(2, 2)
+
     Player:draw()
     Coin.drawAll()
 
-    love.graphics.setBackgroundColor(0.6, 0.8, 1)
+    love.graphics.pop()
 
     love.graphics.setColor(1, 1, 1)
 end

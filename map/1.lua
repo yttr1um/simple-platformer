@@ -9,8 +9,8 @@ return {
   height = 23,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 6,
-  nextobjectid = 1,
+  nextlayerid = 7,
+  nextobjectid = 6,
   properties = {},
   tilesets = {
     {
@@ -214,6 +214,52 @@ return {
         18, 17, 17, 17, 17, 17, 17, 2, 18, 17, 0, 0, 0, 17, 17, 18, 17, 17, 17, 17, 17, 17, 17, 17, 17, 18, 17, 17, 17, 19, 17, 17, 17, 17, 17, 17, 17, 18, 17, 17,
         17, 17, 17, 17, 19, 18, 17, 17, 17, 17, 0, 0, 0, 17, 17, 2, 19, 18, 17, 17, 17, 17, 17, 19, 17, 17, 17, 19, 19, 17, 17, 18, 17, 17, 19, 19, 19, 19, 19, 17,
         19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 0, 0, 0, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 18, 19, 19
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 6,
+      name = "solid",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 3,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 2,
+          y = 303.333,
+          width = 157.333,
+          height = 63.3333,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["collidable"] = true
+          }
+        },
+        {
+          id = 4,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 209.333,
+          y = 302.667,
+          width = 430,
+          height = 66,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["collidable"] = true
+          }
+        }
       }
     }
   }
