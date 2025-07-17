@@ -1,8 +1,6 @@
 require "Player"
 require("coin")
 
-local PIXEL_PER_METER = 50
-
 function beginContact(a, b, contact)
 
     if Coin.beginContact(a, b, contact) then return end
@@ -34,7 +32,7 @@ end
 
 function love.load()
 
-    World = love.physics.newWorld(0, 9.81 * PIXEL_PER_METER)
+    World = love.physics.newWorld(0, 0)
     World:setCallbacks(beginContact, endContact)
 
     SCREEN_WIDTH = 1280
