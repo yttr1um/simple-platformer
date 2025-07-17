@@ -11,24 +11,6 @@ function endContact(a, b, collision)
     Player:endContact(a, b, collision)
 end
 
-
--- function newPlatform(x, y, w, h) 
---     local platform = {
---         x = x,
---         y = y,
---         w = w,
---         h = h,
---         tag = "platform",
-
---         body = love.physics.newBody(World, x, y, "static"),
---         shape = love.physics.newRectangleShape(w/2, h/2, w, h),
---     }
-
---     platform.fixture = love.physics.newFixture(platform.body, platform.shape)
---     platform.fixture:setUserData(platform)
---     table.insert(platforms, platform)
--- end
-
 function love.load()
 
     World = love.physics.newWorld(0, 0)
@@ -41,11 +23,6 @@ function love.load()
     Player:load()
 
     platforms = {}
-
-    -- platforms
-    -- newPlatform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50) 
-    -- newPlatform(200, SCREEN_HEIGHT-100, 200, 50)
-    -- newPlatform(450, 545, 400, 30)
 
     --coins
     Coin.new(550, 520, world)
@@ -68,12 +45,6 @@ function love.keypressed(key, scancode, isrepeat)
 end 
 
 function love.draw()    
-    -- for i = 1, #platforms do
-    --     local p = platforms[i]
-    --     love.graphics.setColor(0.2, 0.6, 1)
-    --     love.graphics.rectangle("fill", p.x, p.y, p.w, p.h)
-    -- end
-
     Map:draw(0, 0, 2)
     Player:draw()
     Coin.drawAll()
