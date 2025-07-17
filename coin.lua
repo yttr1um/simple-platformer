@@ -25,7 +25,7 @@ end
 function Coin:remove()
     for i, instance in ipairs(ActiveCoins) do
         if instance == self then
-            player:incrementCoins()
+            Player:incrementCoins()
             self.sound:play()
             self.physics.body:destroy()
             table.remove(ActiveCoins, i)
@@ -68,7 +68,7 @@ end
 function Coin.beginContact(a, b, contact)
     for i, instance in ipairs(ActiveCoins) do
         if a == instance.physics.fixture or b == instance.physics.fixture then
-            if a == player.fixture or b == player.fixture then
+            if a == Player.physics.fixture or b == Player.physics.fixture then
                 instance.toBeRemoved = true
                 return true
             end
