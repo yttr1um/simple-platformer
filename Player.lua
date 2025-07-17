@@ -21,6 +21,27 @@ end
 
 function Player:update(dt)
     self:syncPhysics()
+    self:move(dt)
+end
+
+function Player:move(dt)
+    if love.keyboard.isDown("d", "right") then
+        if self.xVel < self.maxSpeed then
+            if self.xVel + self.acceleration * dt < self.maxSpeed then
+                self.xVel = self.xVel + self.acceleration * dt
+            else
+                self.xVel = self.maxSpeed
+            end
+        end
+    elseif love.keyboard.isDown("a", "left") then
+        if self.xVel > -self.maxSpeed then
+            if self.xVel - self.acceleration * dt < self.maxSpeed then
+                self.xVel = self.xVel - self.acceleration * dt
+            else
+                self.xVel = -self.maxSpeed
+            end
+        end
+    end
 end
 
 function Player:syncPhysics()
