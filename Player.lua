@@ -41,6 +41,24 @@ function Player:move(dt)
                 self.xVel = -self.maxSpeed
             end
         end
+    else
+        self:applyFriction(dt)
+    end
+end
+
+function Player:applyFriction(dt)
+    if self.xVel > 0 then
+        if self.xVel - self.friction * dt > 0 then
+            self.xVel = self.xVel - self.friction * dt
+        else
+            self.xVel = 0
+        end
+    elseif self.xVel < 0 then
+        if self.xVel + self.friction * dt < 0 then
+            self.xVel = self.xVel + self.friction * dt
+        else
+            self.xVel = 0
+        end
     end
 end
 
