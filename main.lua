@@ -2,19 +2,16 @@ require "Player"
 require("coin")
 
 local PIXEL_PER_METER = 50
---World = love.physics.newWorld(0, 9.81 * PIXEL_PER_METER)
 
 function beginContact(a, b, contact)
 
     if Coin.beginContact(a, b, contact) then return end
 
     local obj1, obj2 = a:getUserData(), b:getUserData()
-    --player.contactPlatform(obj1, obj2)
 end
 
 function endContact(a, b, contact)
     local obj1, obj2 = a:getUserData(), b:getUserData()
-    --player.contactPlatform(obj1, obj2)
 end
 
 
@@ -44,8 +41,6 @@ function love.load()
     SCREEN_HEIGHT = 720
 
     love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT,  {fullscreen=false, vsync=true})
-
-    --player = Player(world)
     Player:load()
 
     platforms = {}
@@ -65,7 +60,6 @@ function love.update(dt)
     World:update(dt)
     Player:update(dt)
     Coin.updateAll(dt)
-    --player:move()
 end
 
 function love.keypressed(key, scancode, isrepeat)
