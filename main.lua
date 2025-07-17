@@ -6,8 +6,8 @@ require("libraries/anim8")
 love.graphics.setDefaultFilter("nearest", "nearest")
 
 function beginContact(a, b, collision)
-    Player:beginContact(a, b, collision)
     if Coin.beginContact(a, b, collision) then return end
+    Player:beginContact(a, b, collision)
 end
 
 function endContact(a, b, collision)
@@ -31,9 +31,9 @@ function love.load()
     platforms = {}
 
     --coins
-    Coin.new(550, 520, world)
-    Coin.new(650, 520, world)
-    Coin.new(750, 520, world)
+    Coin.new(150, 150, world)
+    Coin.new(200, 150, world)
+    Coin.new(250, 150, world)
 end
 
 function love.update(dt)
