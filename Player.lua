@@ -5,6 +5,9 @@ Player = {}
 function Player:load()
     self.x = 100
     self.y = 0
+    self.startX = self.x
+    self.startY = self.y
+
     self.width = 20
     self.height = 20
     self.xVel = 0
@@ -18,6 +21,7 @@ function Player:load()
     self.graceTime = 0
     self.graceDuration = 0.1
 
+    self.alive = true
     self.grounded = false
     self.hasDoubleJump = true
     
@@ -61,6 +65,15 @@ end
 
 function Player:die()
     print("Player died")
+    self.alive = false
+end
+
+function Player:respawn()
+    if not self.alive then
+        self.physics.body:setPosition(self.startX, self.startY)
+        self.health.current = self.health.max
+        self.alive = true
+    end
 end
 
 function Player:incrementCoins()
@@ -68,6 +81,7 @@ function Player:incrementCoins()
 end
 
 function Player:update(dt)
+    self:respawn()
     self:setDirection()
     self:syncPhysics()
     self:move(dt)
