@@ -18,6 +18,13 @@ function Player:load()
     self.gravity = 1500
     self.jumpAmount = -500
 
+    self.color = {
+        red = 1,
+        green = 1,
+        blue = 1,
+        speed = 3,
+    }
+
     self.graceTime = 0
     self.graceDuration = 0.1
 
@@ -54,6 +61,7 @@ function Player:loadAssets()
 end
 
 function Player:takeDamage(amount)
+    self:tintRed()
     if self.health.current - amount > 0 then
         self.health.current = self.health.current - amount
     else
@@ -76,11 +84,17 @@ function Player:respawn()
     end
 end
 
+function Player:tintRed()
+    self.color.green = 0
+    self.color.blue = 0
+end
+
 function Player:incrementCoins()
     self.coins = self.coins + 1
 end
 
 function Player:update(dt)
+    self:untint(dt)
     self:respawn()
     self:setDirection()
     self:syncPhysics()
@@ -88,6 +102,12 @@ function Player:update(dt)
     self:applyGravity(dt)
     self:decreaseGraceTime(dt)
     self.animation.draw:update(dt)
+end
+
+function Player:untint(dt)
+    self.color.red = math.min(self.color.red + self.color.speed * dt, 1)
+    self.color.green = math.min(self.color.green + self.color.speed * dt, 1)
+    self.color.blue = math.min(self.color.blue + self.color.speed * dt, 1)
 end
 
 function Player:setDirection()
@@ -201,5 +221,9 @@ end
 
 function Player:draw()
     local scaleX = self.direction == "left" and -1 or 1
+
+    love.graphics.setColor(self.color.red, self.color.green, self.color.blue)
     self.animation.draw:draw(self.animation.spriteSheet, self.x, self.y, nil, scaleX, 1, self.animation.width/2, self.animation.height/2)
+
+    love.graphics.setColor(1, 1, 1)
 end
