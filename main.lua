@@ -1,10 +1,10 @@
 love.graphics.setDefaultFilter("nearest", "nearest")
 
 local STI = require("libraries/sti")
-require("Player")
-require("coin")
-require("gui")
-require("spike")
+local Player = require("Player")
+local Coin = require("coin")
+local GUI = require("gui")
+local Spike = require("spike")
 
 function beginContact(a, b, collision)
     if Coin.beginContact(a, b, collision) then return end

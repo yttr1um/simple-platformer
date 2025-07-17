@@ -1,6 +1,6 @@
 anim8 = require("libraries/anim8")
 
-Player = {}
+local Player = {}
 
 function Player:load()
     self.x = 100
@@ -227,3 +227,5 @@ function Player:draw()
 
     love.graphics.setColor(1, 1, 1)
 end
+
+return Player
