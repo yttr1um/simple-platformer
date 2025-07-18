@@ -6,6 +6,7 @@ local Coin = require("coin")
 local GUI = require("gui")
 local Spike = require("spike")
 local Camera = require("camera")
+local Stone = require("stone")
 
 function beginContact(a, b, collision)
     if Coin.beginContact(a, b, collision) then return end
@@ -42,13 +43,16 @@ function love.load()
     Coin.new(250, 150, world)
 
     Spike.new(300, 290)
+
+    Stone.new(500, 200)
 end
 
 function love.update(dt)
     World:update(dt)
     Player:update(dt)
     Coin.updateAll(dt)
-    Spike:updateAll(dt)
+    Spike.updateAll(dt)
+    Stone.updateAll(dt)
     GUI:update(dt)
     Camera:setPosition(Player.x, 0)
 end
@@ -70,7 +74,8 @@ function love.draw()
 
     Player:draw()
     Coin.drawAll()
-    Spike:drawAll()
+    Spike.drawAll()
+    Stone.drawAll()
 
     Camera:clear()
 
