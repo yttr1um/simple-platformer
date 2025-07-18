@@ -5,6 +5,7 @@ local Player = require("Player")
 local Coin = require("coin")
 local GUI = require("gui")
 local Spike = require("spike")
+local Camera = require("camera")
 
 function beginContact(a, b, collision)
     if Coin.beginContact(a, b, collision) then return end
@@ -25,6 +26,7 @@ function love.load()
     Map = STI("map/1.lua", {"box2d"})
     Map: box2d_init(World)
     Map.layers.solid.visible = false
+    MapWidth = Map.layers.ground.width * 16
 
     SCREEN_WIDTH = love.graphics.getWidth()
     SCREEN_HEIGHT = love.graphics.getHeight()
@@ -48,6 +50,7 @@ function love.update(dt)
     Coin.updateAll(dt)
     Spike:updateAll(dt)
     GUI:update(dt)
+    Camera:setPosition(Player.x, 0)
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -62,15 +65,15 @@ function love.draw()
     
     love.graphics.setBackgroundColor(0.6, 0.8, 1)
 
-    Map:draw(0, 0, 2)
-    love.graphics.push()
-    love.graphics.scale(2, 2)
+    Map:draw(-Camera.x, -Camera.y, Camera.scale)
+    Camera:apply()
 
     Player:draw()
     Coin.drawAll()
     Spike:drawAll()
 
-    love.graphics.pop()
+    Camera:clear()
+
     GUI:draw()
 
     love.graphics.setColor(1, 1, 1)
