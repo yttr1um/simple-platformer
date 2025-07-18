@@ -21,7 +21,7 @@ end
 
 function love.load()
 
-    World = love.physics.newWorld(0, 0)
+    World = love.physics.newWorld(0, 2000)
     World:setCallbacks(beginContact, endContact)
 
     Map = STI("map/1.lua", {"box2d"})
