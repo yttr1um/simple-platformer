@@ -27,24 +27,15 @@ function love.load()
     Map = STI("map/1.lua", {"box2d"})
     Map: box2d_init(World)
     Map.layers.solid.visible = false
+    Map.layers.entity.visible = false
     MapWidth = Map.layers.ground.width * 16
 
     SCREEN_WIDTH = love.graphics.getWidth()
     SCREEN_HEIGHT = love.graphics.getHeight()
 
     Player:load()
+    spawnEntities()
     GUI:load()
-
-    platforms = {}
-
-    --coins
-    Coin.new(150, 150, world)
-    Coin.new(200, 150, world)
-    Coin.new(250, 150, world)
-
-    Spike.new(300, 290)
-
-    Stone.new(500, 200)
 end
 
 function love.update(dt)
@@ -82,4 +73,16 @@ function love.draw()
     GUI:draw()
 
     love.graphics.setColor(1, 1, 1)
+end
+
+function spawnEntities()
+    for i, v in ipairs(Map.layers.entity.objects) do
+        if v.type == "spike" then
+            Spike.new(v.x + v.width / 2, v.y + v.height / 2)
+        elseif v.type == "stone" then
+            Stone.new(v.x + v.width / 2, v.y + v.height / 2)
+        elseif v.type == "coin" then
+            Coin.new(v.x, v.y)
+        end
+    end
 end
