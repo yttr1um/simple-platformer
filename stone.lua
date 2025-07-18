@@ -9,6 +9,7 @@ function Stone.new(x, y)
     local instance = setmetatable({}, Stone)
     instance.x = x
     instance.y = y
+    instance.r = 0
 
     instance.physics = {}
     instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "dynamic")
@@ -25,11 +26,12 @@ end
 
 function Stone:syncPhysics()
     self.x, self.y = self.physics.body:getPosition()
+    self.r = self.physics.body:getAngle()
 end
 
 function Stone:draw()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.draw(self.img, self.x, self.y, 0, self.scaleX, 1, self.width/2, self.height/2)
+    love.graphics.draw(self.img, self.x, self.y, self.r, self.scaleX, 1, self.width/2, self.height/2)
 end
 
 function Stone.updateAll(dt)
